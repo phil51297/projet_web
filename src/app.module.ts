@@ -5,10 +5,18 @@ import { HealthController } from './health/health.controller';
 import { BullModule } from '@nestjs/bull';
 import { AppConsummer } from './app.consummer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { HealthResolver } from './health/health.resolver';
+import { ApolloDriver } from '@nestjs/apollo';
+import { join } from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    GraphQLModule.forRoot({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    }),
     BullModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -24,6 +32,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AppController, HealthController],
-  providers: [AppService, AppConsummer],
+  providers: [AppService, AppConsummer, HealthResolver],
 })
 export class AppModule {}
