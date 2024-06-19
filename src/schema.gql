@@ -36,11 +36,9 @@ type Query {
   users: [User!]!
   conversations: [Conversation!]!
   conversationsByUser(userId: String!): [Conversation!]!
-  messagesByConversation(conversationId: String!): [Message!]!
 }
 
 type Mutation {
   createUser(username: String!): User!
   createConversation(user1Id: String!, user2Id: String!): Conversation!
-  sendMessage(conversationId: String!, userId: String!, text: String!): Message!
 }

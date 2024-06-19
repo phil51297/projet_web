@@ -35,7 +35,6 @@ import { MessageModule } from './message/message.module';
     }),
     UserModule,
     ConversationModule,
-    MessageModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService, AppConsummer, HealthResolver],
