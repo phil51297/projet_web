@@ -10,7 +10,7 @@ export class UserService {
   }
 
   findOneById(id: string): User {
-    return this.users.find(user => user.id === id);
+    return this.users.find((user) => user.id === id);
   }
 
   create(username: string): User {

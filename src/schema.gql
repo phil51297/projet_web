@@ -24,7 +24,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Conversation {
-  id: Int!
+  id: ID!
   name: String!
   user1: User!
   user2: User!
@@ -36,11 +36,11 @@ type Query {
   users: [User!]!
   conversations: [Conversation!]!
   conversationsByUser(userId: String!): [Conversation!]!
-  messagesByConversation(conversationId: Float!): [Message!]!
+  messagesByConversation(conversationId: String!): [Message!]!
 }
 
 type Mutation {
   createUser(username: String!): User!
   createConversation(user1Id: String!, user2Id: String!): Conversation!
-  sendMessage(conversationId: Float!, userId: String!, text: String!): Message!
+  sendMessage(conversationId: String!, userId: String!, text: String!): Message!
 }

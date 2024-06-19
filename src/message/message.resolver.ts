@@ -3,21 +3,21 @@ import { MessageService } from './message.service';
 import { Message } from './models/message.model';
 import { UserService } from '../user/user.service';
 
-@Resolver(of => Message)
+@Resolver((of) => Message)
 export class MessageResolver {
   constructor(
     private messageService: MessageService,
     private userService: UserService,
   ) {}
 
-  @Query(returns => [Message])
-  messagesByConversation(@Args('conversationId') conversationId: number) {
+  @Query((returns) => [Message])
+  messagesByConversation(@Args('conversationId') conversationId: string) {
     return this.messageService.findMessagesByConversation(conversationId);
   }
 
-  @Mutation(returns => Message)
+  @Mutation((returns) => Message)
   sendMessage(
-    @Args('conversationId') conversationId: number,
+    @Args('conversationId') conversationId: string,
     @Args('userId') userId: string,
     @Args('text') text: string,
   ) {

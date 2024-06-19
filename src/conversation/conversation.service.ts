@@ -10,23 +10,24 @@ export class ConversationService {
     return this.conversations;
   }
 
-  findOneById(id: number): Conversation {
-    return this.conversations.find(conversation => conversation.id === id);
+  findOneById(id: string): Conversation {
+    return this.conversations.find((conversation) => conversation.id === id);
   }
 
   findByUser(userId: string): Conversation[] {
-    return this.conversations.filter(conversation => 
-      conversation.user1.id === userId || conversation.user2.id === userId
+    return this.conversations.filter(
+      (conversation) =>
+        conversation.user1.id === userId || conversation.user2.id === userId,
     );
   }
 
   create(user1: User, user2: User): Conversation {
     const newConversation: Conversation = {
-      id: Date.now(),
+      id: Date.now().toString(),
       name: `${user1.username}-${user2.username}`,
       user1,
       user2,
-      messages: []
+      messages: [],
     };
     this.conversations.push(newConversation);
     return newConversation;

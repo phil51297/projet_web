@@ -7,19 +7,19 @@ import { ConversationService } from '../conversation/conversation.service';
 export class MessageService {
   constructor(private conversationService: ConversationService) {}
 
-  sendMessage(conversationId: number, user: User, text: string): Message {
+  sendMessage(conversationId: string, user: User, text: string): Message {
     const conversation = this.conversationService.findOneById(conversationId);
     const newMessage: Message = {
       id: Date.now(),
       user,
       text,
-      creationDate: new Date()
+      creationDate: new Date(),
     };
     conversation.messages.push(newMessage);
     return newMessage;
   }
 
-  findMessagesByConversation(conversationId: number): Message[] {
+  findMessagesByConversation(conversationId: string): Message[] {
     const conversation = this.conversationService.findOneById(conversationId);
     return conversation.messages;
   }
