@@ -2,10 +2,32 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Status {
-  result: String!
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  conversations: [Conversation!]!
+}
+
+type Message {
+  id: ID!
+  content: String!
+  timestamp: String!
+  sender: User!
+}
+
+type Conversation {
+  id: ID!
+  participants: [User!]!
+  messages: [Message!]!
 }
 
 type Query {
-  getStatus: Status!
+  userConversations(userId: ID!): [Conversation!]!
+  conversationMessages(conversationId: ID!): [Message!]!
+}
+
+type Mutation {
+  createConversation(userId1: ID!, userId2: ID!): Conversation
+  sendMessage(conversationId: ID!, senderId: ID!, content: String!): Message
 }
