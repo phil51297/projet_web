@@ -12,7 +12,7 @@ type User {
 }
 
 type Message {
-  id: Int!
+  id: ID!
   user: User!
   text: String!
   creationDate: DateTime!

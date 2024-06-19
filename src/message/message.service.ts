@@ -10,7 +10,7 @@ export class MessageService {
   sendMessage(conversationId: string, user: User, text: string): Message {
     const conversation = this.conversationService.findOneById(conversationId);
     const newMessage: Message = {
-      id: Date.now(),
+      id: Date.now().toString(),
       user,
       text,
       creationDate: new Date(),

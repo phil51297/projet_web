@@ -26,7 +26,6 @@ export class ConversationResolver {
     @Args('user2Id') user2Id: string,
   ) {
     const user1 = this.userService.findOneById(user1Id);
-    console.warn(user1);
     const user2 = this.userService.findOneById(user2Id);
     return this.conversationService.create(user1, user2);
   }
