@@ -1,20 +1,28 @@
-import { v4 as uuidv4 } from 'uuid';
-import { User } from 'src/user/models/user.model';
-import { Message } from 'src/message/models/message.model';
+import { Field, ObjectType } from "@nestjs/graphql";
+import { Message } from "src/message/models/message.model";
+import { User } from "src/user/models/user.model";
 
-export interface IConversation {
-  id: string;
-  participants: User[];
-  messages: Message[];
-}
+@ObjectType()
+export class Conversation {
 
-export class Conversation implements IConversation {
-  id: string;
-  participants: User[];
-  messages: Message[] = [];
+    constructor(user1: User, user2: User) {
+        this.user1 = user1;
+        this.user2 = user2;
+    }
 
-  constructor(participants: User[]) {
-    this.id = uuidv4();
-    this.participants = participants;
-  }
+    @Field()
+    id: number;
+
+    @Field()
+    name: string;
+
+    @Field()
+    user1: User;
+
+    @Field()
+    user2: User;
+
+    @Field()
+    messages: Message[];
+    
 }
