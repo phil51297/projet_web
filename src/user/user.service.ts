@@ -1,16 +1,21 @@
-import { User, IUser } from "./models/user.model";
+import { Injectable } from '@nestjs/common';
+import { User } from './models/user.model';
 
-let users: IUser[] = [
-  new User('Alice', 'alice@example.com'),
-  new User('Bob', 'bob@example.com')
-];
-
+@Injectable()
 export class UserService {
-  static getUserById(userId: string): IUser | undefined {
-    return users.find(user => user.id === userId);
+  private users: User[] = [];
+
+  findAll(): User[] {
+    return this.users;
   }
 
-  static getAllUsers(): IUser[] {
-    return users;
+  findOneById(id: string): User {
+    return this.users.find(user => user.id === id);
+  }
+
+  create(username: string): User {
+    const newUser: User = { id: Date.now().toString(), username };
+    this.users.push(newUser);
+    return newUser;
   }
 }

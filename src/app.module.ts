@@ -9,6 +9,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { HealthResolver } from './health/health.resolver';
 import { ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
+import { UserModule } from './user/user.module';
+import { ConversationModule } from './conversation/conversation.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -30,6 +33,9 @@ import { join } from 'path';
     BullModule.registerQueue({
       name: 'health-queue',
     }),
+    UserModule,
+    ConversationModule,
+    MessageModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService, AppConsummer, HealthResolver],

@@ -1,27 +1,26 @@
-import { Message, IMessage } from './models/message.model';
-import { ConversationService } from 'src/conversation/conversation.service';
-import { UserService } from 'src/user/user.service';
+import { Injectable } from '@nestjs/common';
+import { Message } from './models/message.model';
+import { User } from '../user/models/user.model';
+import { ConversationService } from '../conversation/conversation.service';
 
+@Injectable()
 export class MessageService {
-  static getConversationMessages(conversationId: string): IMessage[] {
-    const conversation = ConversationService.getConversationById(conversationId);
-    return conversation ? conversation.messages : [];
+  constructor(private conversationService: ConversationService) {}
+
+  sendMessage(conversationId: number, user: User, text: string): Message {
+    const conversation = this.conversationService.findOneById(conversationId);
+    const newMessage: Message = {
+      id: Date.now(),
+      user,
+      text,
+      creationDate: new Date()
+    };
+    conversation.messages.push(newMessage);
+    return newMessage;
   }
 
-  static sendMessage(conversationId: string, senderId: string, content: string): IMessage {
-    const conversation = ConversationService.getConversationById(conversationId);
-    if (!conversation) {
-      throw new Error('Conversation not found');
-    }
-
-    const sender = UserService.getUserById(senderId);
-    if (!sender) {
-      throw new Error('Sender not found');
-    }
-
-    const newMessage = new Message(content, sender);
-    conversation.messages.push(newMessage);
-
-    return newMessage;
+  findMessagesByConversation(conversationId: number): Message[] {
+    const conversation = this.conversationService.findOneById(conversationId);
+    return conversation.messages;
   }
 }

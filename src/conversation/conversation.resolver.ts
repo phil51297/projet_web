@@ -1,25 +1,29 @@
-import { IConversation } from "./models/conversation.model";
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ConversationService } from './conversation.service';
+import { UserService } from '../user/user.service';
+import { Conversation } from './models/conversation.model';
 
-const conversationResolver = {
-  Query: {
-    userConversations: (parent: any, { userId }: { userId: string }) => {
-      return ConversationService.getUserConversations(userId);
-    }
-  },
-  Mutation: {
-    createConversation: (parent: any, { userId1, userId2 }: { userId1: string, userId2: string }) => {
-      return ConversationService.createConversation(userId1, userId2);
-    }
-  },
-  Conversation: {
-    participants: (parent: IConversation) => {
-      return parent.participants;
-    },
-    messages: (parent: IConversation) => {
-      return parent.messages;
-    }
+@Resolver(of => Conversation)
+export class ConversationResolver {
+  constructor(
+    private conversationService: ConversationService,
+    private userService: UserService,
+  ) {}
+
+  @Query(returns => [Conversation])
+  conversations() {
+    return this.conversationService.findAll();
   }
-};
 
-export default conversationResolver;
+  @Query(returns => [Conversation])
+  conversationsByUser(@Args('userId') userId: string) {
+    return this.conversationService.findByUser(userId);
+  }
+
+  @Mutation(returns => Conversation)
+  createConversation(@Args('user1Id') user1Id: string, @Args('user2Id') user2Id: string) {
+    const user1 = this.userService.findOneById(user1Id);
+    const user2 = this.userService.findOneById(user2Id);
+    return this.conversationService.create(user1, user2);
+  }
+}
