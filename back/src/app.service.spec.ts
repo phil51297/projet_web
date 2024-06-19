@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppService } from './app.service';
-import { Queue } from 'bull';
 import { getQueueToken } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 describe('AppService', () => {
   let appService: AppService;
@@ -36,4 +36,6 @@ describe('AppService', () => {
       Hello: 'world',
     });
   });
+
+  // Add more tests as needed for other methods in AppService
 });
