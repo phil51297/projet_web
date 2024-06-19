@@ -1,22 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 import { Message } from './models/message.model';
 import { User } from '../user/models/user.model';
 import { ConversationService } from '../conversation/conversation.service';
 
 @Injectable()
 export class MessageService {
-  constructor(private conversationService: ConversationService) {}
+  constructor(
+    @InjectQueue('messageQueue') private messageQueue: Queue,
+    private conversationService: ConversationService,
+  ) {}
 
-  sendMessage(conversationId: string, user: User, text: string): Message {
-    const conversation = this.conversationService.findOneById(conversationId);
-    const newMessage: Message = {
+  async sendMessage(conversationId: number, user: User, text: string): Promise<void> {
+    const message: Partial<Message> = {
       id: Date.now().toString(),
       user,
       text,
       creationDate: new Date(),
     };
-    conversation.messages.push(newMessage);
-    return newMessage;
+    await this.messageQueue.add('sendMessage', { conversationId, message });
   }
 
   findMessagesByConversation(conversationId: string): Message[] {

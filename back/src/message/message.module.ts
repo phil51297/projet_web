@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common';
+import { BullModule } from '@nestjs/bull';
 import { MessageResolver } from './message.resolver';
 import { MessageService } from './message.service';
 import { ConversationModule } from '../conversation/conversation.module';
 import { UserModule } from '../user/user.module';
-import { MessageQueueModule } from './messageQueue/message-queue.module';
+import { MessageProcessor } from './message.processor';
 
 @Module({
-  imports: [ConversationModule, UserModule, MessageQueueModule],
-  providers: [MessageResolver, MessageService],
+  imports: [
+    BullModule.registerQueue({
+      name: 'messageQueue',
+    }),
+    ConversationModule,
+    UserModule,
+  ],
+  providers: [MessageResolver, MessageService, MessageProcessor],
 })
 export class MessageModule {}
