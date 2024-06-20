@@ -15,14 +15,13 @@ export class MessageResolver {
     return this.messageService.findMessagesByConversation(conversationId);
   }
 
-  @Mutation(returns => Boolean)
+  @Mutation(returns => Message)
   async sendMessage(
     @Args('conversationId') conversationId: number,
     @Args('userId') userId: string,
     @Args('text') text: string,
-  ) {
+  ): Promise<Message> {
     const user = this.userService.findOneById(userId);
-    await this.messageService.sendMessage(conversationId, user, text);
-    return true;
+    return this.messageService.sendMessage(conversationId, user, text);
   }
 }

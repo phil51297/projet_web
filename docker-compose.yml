@@ -5,24 +5,9 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
-    networks:
-      - back
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
 
-
-  nest:
-    build: ./back/.
-    ports:
-      - "3000:3000"
-    depends_on: ['redis']
-    networks:
-      - back
-
-
 volumes:
   redis_data:
-
-networks:
-  back:

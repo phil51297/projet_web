@@ -12,7 +12,7 @@ export class MessageService {
     private conversationService: ConversationService,
   ) {}
 
-  async sendMessage(conversationId: number, user: User, text: string): Promise<void> {
+  async sendMessage(conversationId: number, user: User, text: string): Promise<Message> {
     const message: Partial<Message> = {
       id: Date.now().toString(),
       user,
@@ -20,6 +20,7 @@ export class MessageService {
       creationDate: new Date(),
     };
     await this.messageQueue.add('sendMessage', { conversationId, message });
+    return message as Message; 
   }
 
   findMessagesByConversation(conversationId: string): Message[] {
