@@ -42,5 +42,5 @@ type Query {
 type Mutation {
   createUser(username: String!): User!
   createConversation(user1Id: String!, user2Id: String!): Conversation!
-  sendMessage(conversationId: Float!, userId: String!, text: String!): Message!
+  sendMessage(conversationId: String!, userId: String!, text: String!): Message!
 }

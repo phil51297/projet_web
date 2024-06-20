@@ -4,6 +4,7 @@ import { Queue } from 'bull';
 import { Message } from './models/message.model';
 import { User } from '../user/models/user.model';
 import { ConversationService } from '../conversation/conversation.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class MessageService {
@@ -12,9 +13,13 @@ export class MessageService {
     private conversationService: ConversationService,
   ) {}
 
-  async sendMessage(conversationId: number, user: User, text: string): Promise<void> {
+  async sendMessage(
+    conversationId: string,
+    user: User,
+    text: string,
+  ): Promise<void> {
     const message: Partial<Message> = {
-      id: Date.now().toString(),
+      id: uuidv4(),
       user,
       text,
       creationDate: new Date(),

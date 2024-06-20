@@ -17,7 +17,7 @@ export class MessageResolver {
 
   @Mutation((returns) => Message)
   async sendMessage(
-    @Args('conversationId') conversationId: number,
+    @Args('conversationId') conversationId: string,
     @Args('userId') userId: string,
     @Args('text') text: string,
   ) {

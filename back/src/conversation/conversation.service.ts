@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Conversation } from './models/conversation.model';
 import { User } from '../user/models/user.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ConversationService {
@@ -23,7 +24,7 @@ export class ConversationService {
 
   create(user1: User, user2: User): Conversation {
     const newConversation: Conversation = {
-      id: Date.now().toString(),
+      id: uuidv4(),
       name: `${user1.username}-${user2.username}`,
       user1,
       user2,
