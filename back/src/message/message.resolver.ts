@@ -3,19 +3,19 @@ import { MessageService } from './message.service';
 import { Message } from './models/message.model';
 import { UserService } from '../user/user.service';
 
-@Resolver((of) => Message)
+@Resolver()
 export class MessageResolver {
   constructor(
     private messageService: MessageService,
     private userService: UserService,
   ) {}
 
-  @Query((returns) => [Message])
+  @Query(() => [Message]) // Remove the unused 'returns' parameter
   messagesByConversation(@Args('conversationId') conversationId: string) {
     return this.messageService.findMessagesByConversation(conversationId);
   }
 
-  @Mutation((returns) => Message)
+  @Mutation(() => Message)
   async sendMessage(
     @Args('conversationId') conversationId: string,
     @Args('userId') userId: string,
