@@ -3,24 +3,24 @@ import { ConversationService } from './conversation.service';
 import { UserService } from '../user/user.service';
 import { Conversation } from './models/conversation.model';
 
-@Resolver((of) => Conversation)
+@Resolver(() => Conversation)
 export class ConversationResolver {
   constructor(
     private conversationService: ConversationService,
     private userService: UserService,
   ) {}
 
-  @Query((returns) => [Conversation])
+  @Query(() => [Conversation])
   conversations() {
     return this.conversationService.findAll();
   }
 
-  @Query((returns) => [Conversation])
+  @Query(() => [Conversation])
   conversationsByUser(@Args('userId') userId: string) {
     return this.conversationService.findByUser(userId);
   }
 
-  @Mutation((returns) => Conversation)
+  @Mutation(() => Conversation)
   createConversation(
     @Args('user1Id') user1Id: string,
     @Args('user2Id') user2Id: string,

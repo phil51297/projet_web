@@ -9,18 +9,18 @@ export class Conversation {
     this.user2 = user2;
   }
 
-  @Field((type) => ID)
+  @Field(() => ID)
   id: string;
 
   @Field()
   name: string;
 
-  @Field((type) => User)
+  @Field(() => User)
   user1: User;
 
-  @Field((type) => User)
+  @Field(() => User)
   user2: User;
 
-  @Field((type) => [Message])
+  @Field(() => [Message])
   messages: Message[];
 }
