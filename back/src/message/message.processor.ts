@@ -8,9 +8,7 @@ export class MessageProcessor {
   constructor(private conversationService: ConversationService) {}
 
   @Process('sendMessage')
-  async handleSendMessage(
-    job: Job<{ conversationId: string; message: Partial<Message> }>,
-  ) {
+  async handleSendMessage(job: Job<{ conversationId: string; message: Partial<Message> }>) {
     const { conversationId, message } = job.data;
     const conversation = this.conversationService.findOneById(conversationId);
 

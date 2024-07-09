@@ -17,7 +17,9 @@ describe('MessageProcessor', () => {
         {
           provide: ConversationService,
           useValue: {
-            findOneById: jest.fn().mockImplementation(() => mockConversation), // Remove the unused 'id' parameter
+            findOneById: jest
+              .fn()
+              .mockImplementation((id: string) => mockConversation),
           },
         },
       ],
