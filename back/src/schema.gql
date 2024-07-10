@@ -9,6 +9,7 @@ type Status {
 type User {
   id: ID!
   username: String!
+  password: String!
 }
 
 type Message {
@@ -41,7 +42,7 @@ type Query {
 }
 
 type Mutation {
-  createUser(username: String!): User!
+  createUser(username: String!, password: String!): User!
   createConversation(user1Id: String!, user2Id: String!): Conversation!
   sendMessage(conversationId: String!, userId: String!, text: String!): Message!
 }

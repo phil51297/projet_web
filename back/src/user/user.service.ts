@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './models/user.model';
 import * as bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,7 @@ export class UserService {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
     const newUser: User = {
-      id: Date.now().toString(),
+      id: uuidv4(),
       username,
       password: hashedPassword,
     };
