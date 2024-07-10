@@ -1,6 +1,6 @@
 import { Field, ObjectType, ID } from '@nestjs/graphql';
-import { Message } from 'src/message/models/message.model';
-import { User } from 'src/user/models/user.model';
+import { Message } from '../../message/models/message.model';
+import { User } from '../../user/models/user.model';
 
 @ObjectType()
 export class Conversation {
@@ -9,18 +9,18 @@ export class Conversation {
     this.user2 = user2;
   }
 
-  @Field((type) => ID)
+  @Field(() => ID)
   id: string;
 
   @Field()
   name: string;
 
-  @Field((type) => User)
+  @Field(() => User)
   user1: User;
 
-  @Field((type) => User)
+  @Field(() => User)
   user2: User;
 
-  @Field((type) => [Message])
+  @Field(() => [Message])
   messages: Message[];
 }

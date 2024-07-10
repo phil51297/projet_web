@@ -3,16 +3,15 @@ import { User } from '../../user/models/user.model';
 
 @ObjectType()
 export class Message {
+  @Field(() => ID)
+  id: string;
 
-    @Field(type => ID)
-    id: string;
+  @Field(() => User)
+  user: User;
 
-    @Field(type => User)
-    user: User;
+  @Field()
+  text: string;
 
-    @Field()
-    text: string;
-
-    @Field()
-    creationDate: Date;
+  @Field()
+  creationDate: Date;
 }

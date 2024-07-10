@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "d6dc6753-a352-4707-8ae3-34d5208d5df7",
+		"name": "back",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25503374",
+		"_collection_link": "https://projetwebulep.postman.co/workspace/projet_web_m1~7a9422fd-2ca0-48b4-afc1-abd96398de8e/collection/26992099-d6dc6753-a352-4707-8ae3-34d5208d5df7?action=share&source=collection_link&creator=25503374"
+	},
+	"item": [
+		{
+			"name": "health check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/health",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create User - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Create User - Response should contain the created user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.createUser).to.have.property('id');\r",
+							"    pm.expect(jsonData.data.createUser).to.have.property('username', 'john_doe');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    createUser(username: \"john_doe\") {\r\n        id\r\n        username\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Users - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Users - Response should be an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.users).to.be.an('array');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\r\n  users {\r\n    id\r\n    username\r\n  }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create Conversation - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    createConversation(user1Id: \"2bba11ff-e572-4d3f-9aa7-8cb5ce2dc012\", user2Id: \"607c872e-3c7f-4d5e-a90c-861fcefbad54\") {\r\n        id\r\n        name\r\n        user1 {\r\n            id\r\n            username\r\n        }\r\n        user2 {\r\n            id\r\n            username\r\n        }\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch user conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get User Conversations - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get User Conversations - Response should be an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.conversationsByUser).to.be.an('array');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    conversationsByUser(userId: \"2bba11ff-e572-4d3f-9aa7-8cb5ce2dc012\") {\r\n        id\r\n        name\r\n        user1 {\r\n            id\r\n            username\r\n        }\r\n        user2 {\r\n            id\r\n            username\r\n        }\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    sendMessage(conversationId: \"f49a96f5-4538-4ac4-94e2-d271bee4bd40\", userId: \"4d25e032-af8e-49a3-a53f-bcc1ec08e281\", text: \"Hello conv\") {\r\n        id\r\n        user {\r\n            id\r\n            username\r\n        }\r\n        text\r\n        creationDate\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
