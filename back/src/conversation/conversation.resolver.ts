@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ConversationService } from './conversation.service';
 import { UserService } from '../user/user.service';
 import { Conversation } from './models/conversation.model';
+import { Message } from '../message/models/message.model';
 
 @Resolver(() => Conversation)
 export class ConversationResolver {
@@ -18,6 +19,11 @@ export class ConversationResolver {
   @Query(() => [Conversation])
   conversationsByUser(@Args('userId') userId: string) {
     return this.conversationService.findByUser(userId);
+  }
+
+  @Query(() => [Message])
+  messagesByUsers(@Args('user1Id') user1Id: string, @Args('user2Id') user2Id: string) {
+    return this.conversationService.findMessagesByUsers(user1Id, user2Id);
   }
 
   @Mutation(() => Conversation)

@@ -36,6 +36,7 @@ type Query {
   users: [User!]!
   conversations: [Conversation!]!
   conversationsByUser(userId: String!): [Conversation!]!
+  messagesByUsers(user1Id: String!, user2Id: String!): [Message!]!
   messagesByConversation(conversationId: String!): [Message!]!
 }
 
