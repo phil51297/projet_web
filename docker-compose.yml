@@ -10,15 +10,25 @@ services:
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
 
 
   nest:
-    build: ./back/.
+    image: ulysseguillot/nestqueue:latest
     ports:
       - "3000:3000"
     depends_on: ['redis']
     networks:
       - back
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
 
 
 volumes:
