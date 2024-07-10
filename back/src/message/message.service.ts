@@ -17,14 +17,15 @@ export class MessageService {
     conversationId: string,
     user: User,
     text: string,
-  ): Promise<void> {
-    const message: Partial<Message> = {
+  ): Promise<Message> {
+    const message: Message = {
       id: uuidv4(),
       user,
       text,
       creationDate: new Date(),
     };
     await this.messageQueue.add('sendMessage', { conversationId, message });
+    return message;
   }
 
   findMessagesByConversation(conversationId: string): Message[] {
