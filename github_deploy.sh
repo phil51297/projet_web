@@ -3,7 +3,7 @@
 # nombre d'instances
 AWS_INSTANCE_NUMBER=2
 
-docker container run -it --rm \
+docker container run --rm \
   -v $PWD/terraform:$PWD \
   -w $PWD \
   -e AWS_ACCESS_KEY_ID \
@@ -11,7 +11,7 @@ docker container run -it --rm \
   -e TF_VAR_aws_instance_number=$AWS_INSTANCE_NUMBER \
   hashicorp/terraform init
 
-docker container run -it --rm \
+docker container run --rm \
   -v $PWD/terraform:$PWD \
   -w $PWD \
   -e AWS_ACCESS_KEY_ID \
@@ -19,7 +19,7 @@ docker container run -it --rm \
   -e TF_VAR_aws_instance_number=$AWS_INSTANCE_NUMBER \
   hashicorp/terraform plan
 
-docker container run -it --rm \
+docker container run --rm \
   -v $PWD/terraform:$PWD \
   -w $PWD \
   -e AWS_ACCESS_KEY_ID \
