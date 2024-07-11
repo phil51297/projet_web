@@ -46,6 +46,6 @@ done
 docker build -t ansible_image ./ansible
 
 # Execution du playbook Ansible
-docker container run --rm -it ansible_image ansible-playbook -i inventory.ini playbook.yml
+docker container run --rm ansible_image ansible-playbook -i inventory.ini playbook.yml
 
 
