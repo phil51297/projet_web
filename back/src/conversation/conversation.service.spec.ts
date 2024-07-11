@@ -31,19 +31,15 @@ describe('ConversationService', () => {
   });
 
   it('should find all conversations', async () => {
-    // Assuming findAll returns an array of conversations
     const conversations = await service.findAll();
     expect(Array.isArray(conversations)).toBeTruthy();
     expect(conversations.length).toBeGreaterThanOrEqual(0);
   });
 
   it('should find a conversation by ID', async () => {
-    // First, create a conversation to ensure it exists
     const user1: User = { id: '1', username: 'user1' } as User;
     const user2: User = { id: '2', username: 'user2' } as User;
-    service.create(user1, user2); // This adds a conversation with ID 'test-uuid'
-
-    // Now, attempt to find the conversation by ID
+    service.create(user1, user2); 
     const conversationId = 'test-uuid';
     const conversation = await service.findOneById(conversationId);
     expect(conversation).toBeDefined();
@@ -51,7 +47,6 @@ describe('ConversationService', () => {
   });
 
   it('should find conversations by user', async () => {
-    // Assuming findByUser returns an array of conversations for a given user
     const user: User = { id: '1', username: 'user1' } as User;
     const conversations = await service.findByUser(user.id);
     expect(Array.isArray(conversations)).toBeTruthy();
