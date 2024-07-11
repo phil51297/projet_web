@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 import { User } from './models/user.model';
+import * as bcrypt from 'bcrypt';
 
 describe('UserResolver', () => {
   let resolver: UserResolver;
@@ -15,11 +16,11 @@ describe('UserResolver', () => {
           provide: UserService,
           useValue: {
             findAll: jest.fn().mockResolvedValue([]),
-            create: jest
-              .fn()
-              .mockImplementation((username: string) =>
-                Promise.resolve({ id: '1', username }),
-              ),
+            create: jest.fn().mockImplementation(async (username: string, password: string) => {
+              const salt = await bcrypt.genSalt();
+              const hashedPassword = await bcrypt.hash(password, salt);
+              return { id: '1', username, password: hashedPassword };
+            }),
           },
         },
       ],
@@ -36,8 +37,13 @@ describe('UserResolver', () => {
 
   it('should create a new user', async () => {
     const username = 'test';
-    const user: User = { id: '1', username };
-    expect(await resolver.createUser(username)).toEqual(user);
-    expect(service.create).toHaveBeenCalledWith(username);
+    const password = 'password123';
+    const user: User = { id: '1', username, password: await bcrypt.hash(password, await bcrypt.genSalt()) };
+    expect(await resolver.createUser(username, password)).toEqual({
+      id: user.id,
+      username: user.username,
+      password: expect.any(String)
+    });
+    expect(service.create).toHaveBeenCalledWith(username, password);
   });
 });
