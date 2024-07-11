@@ -27,7 +27,9 @@ describe('UserService', () => {
     const password = 'password123';
     const user: User = await service.create(username, password);
     const allUsers = service.findAll();
-    expect(allUsers).toContainEqual(expect.objectContaining({ username: 'test' }));
+    expect(allUsers).toContainEqual(
+      expect.objectContaining({ username: 'test' }),
+    );
     expect(await bcrypt.compare(password, user.password)).toBe(true);
   });
 

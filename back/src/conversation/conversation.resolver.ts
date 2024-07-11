@@ -22,7 +22,10 @@ export class ConversationResolver {
   }
 
   @Query(() => [Message])
-  messagesByUsers(@Args('user1Id') user1Id: string, @Args('user2Id') user2Id: string) {
+  messagesByUsers(
+    @Args('user1Id') user1Id: string,
+    @Args('user2Id') user2Id: string,
+  ) {
     return this.conversationService.findMessagesByUsers(user1Id, user2Id);
   }
 
