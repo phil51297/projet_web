@@ -39,7 +39,7 @@ describe('ConversationService', () => {
   it('should find a conversation by ID', async () => {
     const user1: User = { id: '1', username: 'user1' } as User;
     const user2: User = { id: '2', username: 'user2' } as User;
-    service.create(user1, user2); 
+    service.create(user1, user2);
     const conversationId = 'test-uuid';
     const conversation = await service.findOneById(conversationId);
     expect(conversation).toBeDefined();
