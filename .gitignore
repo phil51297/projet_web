@@ -3,3 +3,4 @@
 node_modules
 myKey.pem
 .env
+.vite
