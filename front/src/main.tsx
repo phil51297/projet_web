@@ -5,7 +5,8 @@ import "./index.css";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY =
+  "pk_test_ZGlzY3JldGUtc2VhZ3VsbC04OS5jbGVyay5hY2NvdW50cy5kZXYk";
 
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
