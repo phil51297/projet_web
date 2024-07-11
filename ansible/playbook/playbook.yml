@@ -49,8 +49,8 @@
 
     - name: Clone Git repository
       git:
-        repo: 'https://github.com/yeyo671/projet_web'
-        dest: /home/ubuntu/Symfony_AWS
+        repo: 'https://github.com/phil51297/projet_web'
+        dest: /home/ubuntu/projet_web
 
     - name: Copy repository contents
       shell: cp -r /home/ubuntu/projet_web/* /home/ubuntu/
