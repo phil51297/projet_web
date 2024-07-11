@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './models/user.model';
-// @ts-expect-error
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
