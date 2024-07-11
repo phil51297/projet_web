@@ -54,11 +54,3 @@ jobs:
 
       - name: Shut down Docker Compose
         run: docker-compose down
-
-      - name: Run deploy script
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          chmod +x ./github_deploy.sh
-          ./github_deploy.sh
