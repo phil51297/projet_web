@@ -52,6 +52,7 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.data.createUser).to.have.property('id');\r",
 							"    pm.expect(jsonData.data.createUser).to.have.property('username', 'john_doe');\r",
+							"    pm.expect(jsonData.data.createUser).to.have.property('password');\r",
 							"});\r",
 							""
 						],
@@ -62,8 +63,11 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"packages": {},
-						"type": "text/javascript"
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -73,7 +77,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\r\n    createUser(username: \"john_doe\") {\r\n        id\r\n        username\r\n    }\r\n}",
+						"query": "mutation {\r\n    createUser(username: \"john_doe\", password: \"password123\") {\r\n        id\r\n        username\r\n        password\r\n    }\r\n}\r\n",
 						"variables": ""
 					}
 				},
@@ -119,7 +123,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\r\n  users {\r\n    id\r\n    username\r\n  }\r\n}\r\n",
+						"query": "{\r\n  users {\r\n    id\r\n    username\r\n    password\r\n  }\r\n}\r\n",
 						"variables": ""
 					}
 				},
@@ -160,7 +164,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\r\n    createConversation(user1Id: \"2bba11ff-e572-4d3f-9aa7-8cb5ce2dc012\", user2Id: \"607c872e-3c7f-4d5e-a90c-861fcefbad54\") {\r\n        id\r\n        name\r\n        user1 {\r\n            id\r\n            username\r\n        }\r\n        user2 {\r\n            id\r\n            username\r\n        }\r\n    }\r\n}",
+						"query": "mutation {\r\n    createConversation(user1Id: \"d708b456-57e4-4d6f-9dd8-9c000b6549f0\", user2Id: \"ea70dca4-d6b1-4421-8436-e90c1e15f4b9\") {\r\n        id\r\n        name\r\n        user1 {\r\n            id\r\n            username\r\n        }\r\n        user2 {\r\n            id\r\n            username\r\n        }\r\n    }\r\n}",
 						"variables": ""
 					}
 				},
@@ -206,7 +210,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\r\n    conversationsByUser(userId: \"2bba11ff-e572-4d3f-9aa7-8cb5ce2dc012\") {\r\n        id\r\n        name\r\n        user1 {\r\n            id\r\n            username\r\n        }\r\n        user2 {\r\n            id\r\n            username\r\n        }\r\n    }\r\n}",
+						"query": "query {\r\n    conversationsByUser(userId: \"f68d1106-cc3c-4f73-99fd-c12ac75e85ea\") {\r\n        id\r\n        name\r\n        user1 {\r\n            id\r\n            username\r\n        }\r\n        user2 {\r\n            id\r\n            username\r\n        }\r\n    }\r\n}",
 						"variables": ""
 					}
 				},
@@ -226,13 +230,68 @@
 		},
 		{
 			"name": "send message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Send message - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\r\n    sendMessage(conversationId: \"f49a96f5-4538-4ac4-94e2-d271bee4bd40\", userId: \"4d25e032-af8e-49a3-a53f-bcc1ec08e281\", text: \"Hello conv\") {\r\n        id\r\n        user {\r\n            id\r\n            username\r\n        }\r\n        text\r\n        creationDate\r\n    }\r\n}",
+						"query": "mutation {\r\n    sendMessage(conversationId: \"a7047c54-e8f5-48c8-8472-dbf01aa02b5f\", userId: \"d708b456-57e4-4d6f-9dd8-9c000b6549f0\", text: \"Hello conv\") {\r\n        id\r\n        user {\r\n            id\r\n            username\r\n        }\r\n        text\r\n        creationDate\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetch message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    messagesByConversation(conversationId: \"a7047c54-e8f5-48c8-8472-dbf01aa02b5f\") {\r\n        id\r\n        text\r\n        creationDate\r\n        user {\r\n            id\r\n            username\r\n        }\r\n    }\r\n}\r\n",
 						"variables": ""
 					}
 				},

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './models/user.model';
+import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -14,9 +15,23 @@ export class UserService {
     return this.users.find((user) => user.id === id);
   }
 
-  create(username: string): User {
-    const newUser: User = { id: uuidv4(), username };
+  async create(username: string, password: string): Promise<User> {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser: User = {
+      id: uuidv4(),
+      username,
+      password: hashedPassword,
+    };
     this.users.push(newUser);
     return newUser;
+  }
+
+  async validateUser(username: string, password: string): Promise<boolean> {
+    const user = this.users.find((user) => user.username === username);
+    if (!user) {
+      return false;
+    }
+    return await bcrypt.compare(password, user.password);
   }
 }
