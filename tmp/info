@@ -1,6 +1,6 @@
 [0m[1maws_security_group.app_server_sg: Refreshing state... [id=sg-03ab5cf0dae74d1e3][0m
-[0m[1maws_instance.app_server[0]: Refreshing state... [id=i-0850ca85d5a0b2ee1][0m
-[0m[1maws_instance.app_server[1]: Refreshing state... [id=i-019fd92d9d141fd76][0m
+[0m[1maws_instance.app_server[1]: Refreshing state... [id=i-0ad78b0ad2473191d][0m
+[0m[1maws_instance.app_server[0]: Refreshing state... [id=i-0743fd5d492ee41cb][0m
 
 [0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
 
@@ -11,10 +11,10 @@ Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
 Outputs:
 
 [0mapp_server_public_dns = [
-  "ec2-54-82-5-135.compute-1.amazonaws.com",
-  "ec2-54-146-199-17.compute-1.amazonaws.com",
+  "ec2-54-167-70-248.compute-1.amazonaws.com",
+  "ec2-54-242-47-91.compute-1.amazonaws.com",
 ]
 app_server_public_ip = [
-  "54.82.5.135",
-  "54.146.199.17",
+  "54.167.70.248",
+  "54.242.47.91",
 ]
