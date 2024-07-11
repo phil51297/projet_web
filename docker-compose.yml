@@ -16,12 +16,24 @@ services:
         condition: on-failure
 
 
+  database:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    networks:
+      - back
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   nest:
     image: ulysseguillot/nestqueue:latest
     ports:
       - "3000:3000"
-    depends_on: ['redis']
+    depends_on: ['redis', 'database']
     networks:
       - back
     deploy:
@@ -29,10 +41,9 @@ services:
       restart_policy:
         condition: on-failure
 
-
-
 volumes:
   redis_data:
+  postgres_data:
 
 networks:
   back:
