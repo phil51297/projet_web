@@ -38,8 +38,10 @@ export class ConversationService {
   findConversationByUsers(user1Id: string, user2Id: string): Conversation {
     return this.conversations.find(
       (conversation) =>
-        (conversation.user1.id === user1Id && conversation.user2.id === user2Id) ||
-        (conversation.user1.id === user2Id && conversation.user2.id === user1Id),
+        (conversation.user1.id === user1Id &&
+          conversation.user2.id === user2Id) ||
+        (conversation.user1.id === user2Id &&
+          conversation.user2.id === user1Id),
     );
   }
 
