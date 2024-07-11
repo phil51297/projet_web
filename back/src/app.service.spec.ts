@@ -10,7 +10,6 @@ describe('AppService', () => {
   beforeEach(async () => {
     healthQueueMock = {
       add: jest.fn(),
-      // Add other methods you might need to mock
     } as unknown as jest.Mocked<Queue>;
 
     const module: TestingModule = await Test.createTestingModule({
@@ -36,6 +35,4 @@ describe('AppService', () => {
       Hello: 'world',
     });
   });
-
-  // Add more tests as needed for other methods in AppService
 });
