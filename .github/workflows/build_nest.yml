@@ -54,3 +54,17 @@ jobs:
 
       - name: Shut down Docker Compose
         run: docker-compose down
+
+      - name: Create AWS PEM key file
+        run: |
+          echo "${{ secrets.AWS_KEY }}" > myKey.pem
+          chmod 400 myKey.pem
+          cp myKey.pem ./ansible/playbook/
+
+      - name: Run deploy script
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          chmod +x ./github_deploy.sh
+          ./github_deploy.sh

@@ -3,7 +3,7 @@ version: '3.8'
 services:
   redis:
     image: redis:latest
-    platform: linux/arm64/v8
+    platform: linux/arm64
     ports:
       - "6379:6379"
     networks:
@@ -17,13 +17,30 @@ services:
         condition: on-failure
 
 
+  database:
+    image: postgres:16
+    platform: linux/arm64
+    ports:
+      - "5432:5432"
+    networks:
+      - back
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: app
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   nest:
     image: ulysseguillot/nestqueue:latest
     platform: linux/amd64
     ports:
       - "3000:3000"
-    depends_on: ['redis']
+    depends_on: ['redis', 'database']
     networks:
       - back
     deploy:
@@ -31,10 +48,9 @@ services:
       restart_policy:
         condition: on-failure
 
-
-
 volumes:
   redis_data:
+  postgres_data:
 
 networks:
   back:

@@ -16,11 +16,15 @@ describe('UserResolver', () => {
           provide: UserService,
           useValue: {
             findAll: jest.fn().mockResolvedValue([]),
-            create: jest.fn().mockImplementation(async (username: string, password: string) => {
-              const salt = await bcrypt.genSalt();
-              const hashedPassword = await bcrypt.hash(password, salt);
-              return { id: '1', username, password: hashedPassword };
-            }),
+            create: jest
+              .fn()
+              .mockImplementation(
+                async (username: string, password: string) => {
+                  const salt = await bcrypt.genSalt();
+                  const hashedPassword = await bcrypt.hash(password, salt);
+                  return { id: '1', username, password: hashedPassword };
+                },
+              ),
           },
         },
       ],
@@ -38,11 +42,15 @@ describe('UserResolver', () => {
   it('should create a new user', async () => {
     const username = 'test';
     const password = 'password123';
-    const user: User = { id: '1', username, password: await bcrypt.hash(password, await bcrypt.genSalt()) };
+    const user: User = {
+      id: '1',
+      username,
+      password: await bcrypt.hash(password, await bcrypt.genSalt()),
+    };
     expect(await resolver.createUser(username, password)).toEqual({
       id: user.id,
       username: user.username,
-      password: expect.any(String)
+      password: expect.any(String),
     });
     expect(service.create).toHaveBeenCalledWith(username, password);
   });
