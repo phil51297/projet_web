@@ -12,7 +12,7 @@ export class UserService {
   }
 
   findOneById(id: string): User {
-    return this.users.find(user => user.id === id);
+    return this.users.find((user) => user.id === id);
   }
 
   async create(username: string, password: string): Promise<User> {
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   async validateUser(username: string, password: string): Promise<boolean> {
-    const user = this.users.find(user => user.username === username);
+    const user = this.users.find((user) => user.username === username);
     if (!user) {
       return false;
     }

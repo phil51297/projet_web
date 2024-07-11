@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # nombre d'instances
 AWS_INSTANCE_NUMBER=2
 
