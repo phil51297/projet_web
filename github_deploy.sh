@@ -48,17 +48,24 @@ docker build -t ansible_image ./ansible
 # Execution du playbook Ansible
 echo "Préparation à l'exécution du playbook Ansible..."
 echo "-------------------------------------------------"
-docker container run --rm ansible_image ansible-playbook -i inventory.ini playbook.yml
-if [ $? -ne 0 ]; then
-    echo "La première tentative a échoué, tentative de relance..."
-    sleep 10
-    docker container run --rm ansible_image  ansible-playbook -i inventory.ini playbook.yml
-    if [ $? -ne 0 ]; then
-        echo "Échec de l'exécution du playbook Ansible après deux tentatives."
-        exit 1
+
+attempts=0
+max_attempts=10
+timeout=5
+
+while [ $attempts -lt $max_attempts ]; do
+    docker container run --rm ansible_image ansible-playbook -i inventory.ini playbook.yml
+    if [ $? -eq 0 ]; then
+        echo "Playbook Ansible exécuté avec succès."
+        exit 0
     fi
-else
-    echo "Playbook Ansible exécuté avec succès."
-fi
+
+    attempts=$((attempts + 1))
+    echo "Tentative $attempts/$max_attempts échouée. Nouvelle tentative dans $timeout secondes..."
+    sleep $timeout
+done
+
+echo "Échec de l'exécution du playbook Ansible après $max_attempts tentatives."
+exit 1
 
 
