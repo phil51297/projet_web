@@ -1,10 +1,5 @@
 import { SendHorizonal } from "lucide-react";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import RegisterComponent from "./components/Register";
 
 function App() {
   return (
@@ -544,12 +539,7 @@ function App() {
                   </a>
                 </div>
               </div>
-              <SignedOut>
-                <SignInButton />
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
+              <RegisterComponent />
 
               <div
                 className="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"

@@ -1,0 +1,76 @@
+# Queries
+
+# GetStatus Query
+query GetStatus {
+  getStatus {
+    result
+  }
+}
+
+# GetUsers Query
+query GetUsers {
+  users {
+    id
+    username
+  }
+}
+
+# GetConversations Query
+query GetConversations {
+  conversations {
+    id
+    name
+    user1 {
+      id
+      username
+    }
+    user2 {
+      id
+      username
+    }
+    messages {
+      id
+      text
+      creationDate
+    }
+  }
+}
+
+# GetConversationsByUser Query with Variable
+query GetConversationsByUser($userId: String!) {
+  conversationsByUser(userId: $userId) {
+    id
+    name
+  }
+}
+
+# Mutations
+
+# CreateUser Mutation with Variables
+mutation CreateUser($username: String!, $password: String!) {
+  createUser(username: $username, password: $password) {
+    id
+    username
+  }
+}
+
+# CreateConversation Mutation with Variables
+mutation CreateConversation($user1Id: String!, $user2Id: String!) {
+  createConversation(user1Id: $user1Id, user2Id: $user2Id) {
+    id
+    name
+  }
+}
+
+# SendMessage Mutation with Variables
+mutation SendMessage(
+  $conversationId: String!
+  $userId: String!
+  $text: String!
+) {
+  sendMessage(conversationId: $conversationId, userId: $userId, text: $text) {
+    id
+    text
+    creationDate
+  }
+}
